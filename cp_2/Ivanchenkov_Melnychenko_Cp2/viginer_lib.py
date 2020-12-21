@@ -11,7 +11,7 @@ d2 = {i: alphabet[i] for i in range(0, len(alphabet))}
 
 def exclude_letters(text):
     """ исключение из текста символов не из алфавита """
-    return ''.join([letter for letter in text if letter in alphabet])
+    return ''.join([letter for letter in text.lower() if letter in alphabet])
 
 
 def crypt(text, key):
@@ -70,7 +70,8 @@ def conformity_index(text):
     freq = np.array([c_dict[key] for key in c_dict.keys()])
     np_ones = np.ones(len(freq))
     f_sum = freq * (freq-np_ones)
-    return 1/(n*(n-1))*sum(f_sum)
+    f_sum = sum(f_sum)
+    return 1/(n*(n-1)) * f_sum
 
 
 def conformity_index_file(file):

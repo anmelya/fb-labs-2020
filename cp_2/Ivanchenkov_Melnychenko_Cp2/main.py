@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 import matplotlib.ticker as ticker
+from collections import Counter
 
 alphabet = 'абвгдежзийклмнопрстуфхцчшщъыьэюя'
 
@@ -26,7 +27,7 @@ def demoindex():
 def task1_2():
     ci_file = conformity_index_file('text.txt')
     x, y1, y2 = [], [], []
-    with open('text1.txt', 'r', encoding='utf-8') as f:
+    with open('to_decrypt.txt', 'r', encoding='utf-8') as f:
         text = ''.join([exclude_letters(line) for line in f])
     for i in range(2, 21):
         key = ''.join([random.choice(alphabet) for j in range(0, i)])
@@ -67,11 +68,24 @@ def task3():
     decrypt_file('to_decrypt.txt', 'decrypted.txt', key)
 
     count = 0
-    for item in zip(combo_1, combo_2):
-        if item[0] != item[1]:
+    missed = []
+
+    for item in enumerate(zip(combo_1, combo_2)):
+        if item[1][0] != item[1][1]:
             count += 1
+            missed.append(item[0])
 
     print('Частоти по блокам, де символи ключа не було відновлено відразу ', count)
+
+    blocks = algorithm1('decrypted.txt', 15)
+
+    print('\nЧастоти символов во всех блоках дешифрованного текста')
+    for number in range(0, 15):
+        print(Counter(blocks[number]))
+
+    print('\nЧастоти символов в блоках дешифрованного текста, где не был угадан ключ')
+    for number in missed:
+        print(Counter(blocks[number]))
 
 
 if __name__ == '__main__':
