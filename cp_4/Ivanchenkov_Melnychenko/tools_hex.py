@@ -6,10 +6,10 @@ from itertools import product
 
 def random_s(n_bytes=256):
     """ генерация случайного числа и проверка его алгоритмом Миллера - Рабина """
-    # инициализация генератора, генерация числа
-    n = secrets.randbits(n_bytes)
+    n = random.randint(2 ** (n_bytes-1), 2 ** n_bytes)
     while not is_Prime(n):
-        n = secrets.randbits(n_bytes)
+        n = random.randint(2 ** (n_bytes-1), 2 ** n_bytes)
+    print(bin(n))
     return n
 
 
